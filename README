@@ -1,0 +1,181 @@
+# AI Resume ATS Analyzer
+
+## Project Overview
+
+AI Resume ATS Analyzer is a Streamlit-based web application that uses
+the Google Gemini API to analyze a resume against a target job
+description.
+
+The application provides an AI-assisted ATS-style evaluation and
+highlights strengths, missing or useful keywords, formatting/readability
+issues, and actionable improvements.
+
+> The ATS score is a practical AI-assisted heuristic. It is not an
+> official score from any specific ATS vendor or employer.
+
+## Features
+
+-   Upload a resume in PDF or DOCX format.
+-   Extract resume text automatically.
+-   Enter an optional target job description.
+-   Analyze the resume using Google Gemini.
+-   Generate an ATS score from 0 to 100.
+-   Show score breakdown for keyword match, format parsability,
+    experience impact, skills relevance, and section completeness.
+-   Identify resume strengths.
+-   Identify missing or useful keywords.
+-   Provide prioritized improvement recommendations.
+-   Show an ATS-friendly checklist.
+
+## AI Pipeline
+
+Resume PDF/DOCX -\> Text Extraction -\> Resume + Job Description
+Processing -\> Google Gemini API -\> ATS Analysis -\> Score, Strengths,
+Keywords & Recommendations
+
+## Technologies Used
+
+-   Python
+-   Streamlit
+-   Google Gemini API
+-   Google Gen AI Python SDK
+-   pypdf
+-   python-docx
+
+## Project Files
+
+### app.py
+
+The main Python application file. It contains the Streamlit interface,
+resume upload, PDF/DOCX text extraction, Gemini API client
+configuration, ATS analysis prompt, structured JSON response handling,
+score validation, and results display.
+
+### requirements.txt
+
+Contains the Python dependencies required to run the application:
+
+-   streamlit
+-   google-genai
+-   pypdf
+-   python-docx
+
+## Gemini API Configuration
+
+The application does not hard-code the Gemini API key inside `app.py`.
+
+The `get_api_key()` function first attempts to read:
+
+`st.secrets["GEMINI_API_KEY"]`
+
+and falls back to:
+
+`os.getenv("GEMINI_API_KEY", "")`
+
+The actual API key can therefore be stored securely in Streamlit
+Community Cloud Secrets or an environment variable instead of being
+exposed in the source code.
+
+Do not add or commit the real Gemini API key to GitHub or this README
+file.
+
+## Model
+
+The current model configured in the supplied `app.py` is:
+
+`gemini-3.7-flash`
+
+If the model is changed in `app.py`, update this section accordingly.
+
+## Local Setup
+
+### 1. Clone the repository
+
+``` bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd YOUR_PROJECT_FOLDER
+```
+
+### 2. Install dependencies
+
+``` bash
+pip install -r requirements.txt
+```
+
+### 3. Configure the Gemini API key
+
+Set the `GEMINI_API_KEY` environment variable, or configure the key
+through Streamlit Secrets.
+
+For Streamlit, the secrets configuration can contain:
+
+``` toml
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+```
+
+Do not publish the real key.
+
+### 4. Run the application
+
+``` bash
+streamlit run app.py
+```
+
+## Streamlit Community Cloud Deployment
+
+The application can be deployed from the GitHub repository using
+Streamlit Community Cloud.
+
+Required project files include:
+
+-   `app.py`
+-   `requirements.txt`
+
+After deployment, add `GEMINI_API_KEY` in the application's Streamlit
+Secrets settings.
+
+## Input
+
+The application accepts:
+
+1.  Resume: PDF or DOCX.
+2.  Job Description: optional text input. Providing a job description
+    enables more targeted keyword and relevance analysis.
+
+## Output
+
+The application generates:
+
+-   ATS Score
+-   Score Label
+-   Overall Assessment
+-   Score Breakdown
+-   Strengths
+-   Missing / Useful Keywords
+-   Recommended Improvements
+-   ATS Checklist
+
+## Limitations
+
+-   The ATS score is an AI-assisted estimate and not a guaranteed score
+    from a real ATS system.
+-   Different employers and ATS platforms may use different parsing and
+    ranking rules.
+-   Scanned/image-only PDFs may not provide enough extractable text.
+-   AI-generated analysis depends on the quality and completeness of the
+    resume and job description.
+-   Gemini API availability, quotas, and service conditions can affect
+    analysis requests.
+
+## Security Note
+
+Never include the real Gemini API key in `app.py`, `README.md`, GitHub
+repositories, screenshots, or assignment documents.
+
+Store the key securely using Streamlit Secrets or environment variables.
+
+## Project Purpose
+
+The purpose of this project is to demonstrate a simple AI pipeline that
+processes a resume, uses an AI model for analysis, and produces a
+structured ATS-style report with practical recommendations.
