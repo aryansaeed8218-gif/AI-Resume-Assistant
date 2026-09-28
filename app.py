@@ -9,7 +9,7 @@ from google.genai import types
 from pypdf import PdfReader
 from docx import Document
 
-MODEL = "gemini-3.8-flash"
+MODEL = "gemini-3.5-flash-lite"
 
 st.set_page_config(page_title="AI Resume ATS Analyzer", page_icon="📄", layout="wide")
 
